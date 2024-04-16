@@ -4,66 +4,94 @@ import 'package:app_english/widgets/custom_scaffold.dart';
 import 'package:app_english/widgets/welcome_button.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  const WelcomeScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      child: Column(
+    return Scaffold(
+      body: Stack(
         children: [
-          Flexible(
-              flex: 8,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 0,
-                  horizontal: 30.0,
+          // Lottie Animation
+          Container(
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LottieBuilder.asset("assets/lottie/english.json"),
+                const SizedBox(height: 200)
+              ],
+            ),
+          ),
+          // Bottom Sheet
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
-                child: Center(
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                            text:
-                                'Ahoy and welcome to our English learning app!\n',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                            )),
-                        TextSpan(
-                            text:
-                                '\nLET IS KICK OFF THIS BRAINY ADVENTURE SIDE BY SIDE!',
-                            style: TextStyle(
-                              fontSize: 13,
-                              // height: 0,
-                            ))
-                      ],
-                    ),
-                  ),
+                border: Border(
+                  top: BorderSide(color: Colors.grey, width: 1.0),
                 ),
-              )),
-          const Flexible(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Row(
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
-                    child: WelcomeButton(
-                      buttonText: 'Sign in',
-                      onTap: SignInScreen(),
-                      color: Colors.transparent,
-                      textColor: Colors.white,
-                    ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignInScreen()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(335,20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30), // Change border radius of the button
+                      ),
+                      elevation: 0,
+                      backgroundColor: Colors.blueAccent,),
+                    child: const Text('Login', style: TextStyle(fontSize: 16, color: Colors.white),),
                   ),
-                  Expanded(
-                    child: WelcomeButton(
-                      buttonText: 'Sign up',
-                      onTap: SignUpScreen(),
-                      color: Color(0xFF217066),
-                      textColor: Colors.white,
-                    ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(335,20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30), // Change border radius of the button
+                      ),
+                      elevation: 0,
+                      backgroundColor: Colors.blueAccent,),
+                    child: const Text('Sign up',  style: TextStyle(fontSize: 16, color: Colors.white),),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Action for Login with Google button
+                    },
+
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(335,20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30), // Change border radius of the button
+                      ),
+                      elevation: 0,
+                      side: const BorderSide(color: Colors.black),
+                      backgroundColor: Colors.white,),
+                    icon: Image.asset('assets/images/google.png', height: 22, width: 22), // Replace with actual Google icon asset
+                    label: const Text('Continue with Google', style: TextStyle(fontSize: 16, color: Colors.black),),
                   ),
                 ],
               ),
