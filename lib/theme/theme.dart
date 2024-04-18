@@ -33,6 +33,7 @@ const darkColorScheme = ColorScheme(
 );
 
 ThemeData lightMode = ThemeData(
+  fontFamily: "SanFrancisco",
   useMaterial3: true,
   brightness: Brightness.light,
   colorScheme: lightColorScheme,
@@ -56,6 +57,7 @@ ThemeData lightMode = ThemeData(
 );
 
 ThemeData darkMode = ThemeData(
+  fontFamily: "SanFrancisco",
   useMaterial3: true,
   brightness: Brightness.dark,
   colorScheme: darkColorScheme,
