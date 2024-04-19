@@ -1,13 +1,11 @@
 import 'package:app_english/screens/signin_screen.dart';
 import 'package:app_english/screens/signup_screen.dart';
-import 'package:app_english/widgets/custom_scaffold.dart';
-import 'package:app_english/widgets/welcome_button.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const WelcomeScreen({Key? key});
 
   @override

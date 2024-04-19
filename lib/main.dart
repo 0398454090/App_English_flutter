@@ -1,3 +1,5 @@
+import 'package:app_english/screens/main_page/home_screen.dart';
+import 'package:app_english/screens/main_page/main_scaffold.dart';
 import 'package:app_english/screens/welcome_screen.dart';
 import 'package:app_english/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'App English',
       theme: lightMode,
-      home: const WelcomeScreen(),
+      home: const MainPage(),
     );
   }
 }
