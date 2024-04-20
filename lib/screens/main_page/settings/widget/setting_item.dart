@@ -27,7 +27,8 @@ class SettingItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0), // Add padding here
+        padding: const EdgeInsets.symmetric(
+            horizontal: 10.0, vertical: 8.0), // Add padding here
         width: double.infinity,
         child: Row(
           children: [
@@ -55,12 +56,12 @@ class SettingItem extends StatelessWidget {
             const Spacer(),
             value != null
                 ? Text(
-              value!,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            )
+                    value!,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  )
                 : const SizedBox(),
             const SizedBox(width: 20),
             const Icon(Ionicons.chevron_forward_outline)
