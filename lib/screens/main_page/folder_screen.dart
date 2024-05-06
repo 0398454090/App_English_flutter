@@ -54,7 +54,7 @@ class FolderScreen extends StatelessWidget {
     required Color color,
   }) {
     return Container(
-      margin: const EdgeInsets.all(30.0),
+      margin: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(10.0),
@@ -64,7 +64,7 @@ class FolderScreen extends StatelessWidget {
           SizedBox(
             width: 140,
             height: 120,
-            child: Image.asset(image, fit: BoxFit.contain),
+            child: Image.asset(image, fit: BoxFit.cover),
           ),
           Expanded(
             child: Padding(
