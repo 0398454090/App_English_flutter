@@ -62,9 +62,9 @@ class FolderScreen extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 140,
-            height: 120,
-            child: Image.asset(image, fit: BoxFit.cover),
+            width: 120,
+            height: 100,
+            child: Image.asset(image, fit: BoxFit.contain),
           ),
           Expanded(
             child: Padding(
