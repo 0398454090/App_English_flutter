@@ -13,7 +13,7 @@ class SearchScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text("Search", style: TextStyle(color: Colors.white)),
+        title: const Text("Search", style: TextStyle(color: Colors.black)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -22,7 +22,7 @@ class SearchScreen extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Container(
-            color: const Color(0xFF020E22),
+            color: const Color(0xFFDFE4DA),
           ),
           ListView(
             children: <Widget>[
@@ -30,25 +30,26 @@ class SearchScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: TextField(
                   controller: searchController, // Sử dụng TextEditingController
-                  style: const TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide:
-                          const BorderSide(width: 1, color: Colors.white),
+                          const BorderSide(width: 2, color: Colors.black),
                     ),
                     hintText: "Search for English words... ",
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.2)),
+                    hintStyle: TextStyle(color: Colors.black.withOpacity(0.2)),
                     prefixIcon: const Icon(
                       Icons.search,
                       size: 30,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     suffixIcon: IconButton(
                       icon: const Icon(
                         Icons.clear,
-                        color: Colors.white,
+                        size: 20,
+                        color: Colors.black,
                       ),
                       onPressed: () {
                         // Xóa nội dung của TextField khi nhấn vào icon cancel
@@ -56,7 +57,7 @@ class SearchScreen extends StatelessWidget {
                       },
                     ),
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.2),
+                    fillColor: Colors.black.withOpacity(0.1),
                   ),
                 ),
               )
