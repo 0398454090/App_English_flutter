@@ -14,7 +14,6 @@ class FolderScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFDFE4DA),
         title: const Text("Folder",
             style: TextStyle(
               color: Colors.black,
@@ -25,14 +24,14 @@ class FolderScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Container(
-        color: const Color(0xFFDFE4DA),
+        color: Color.fromRGBO(236, 240, 232, 1),
         child: ListView(
           children: [
             _buildFolder(
               context,
               title: 'Food and Beverage',
               image: 'assets/images/food_logo.png',
-              color: Color.fromARGB(255, 129, 4, 145),
+              color: Color.fromARGB(255, 95, 6, 107),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -123,10 +122,13 @@ class FolderScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              width: 120,
-              height: 100,
-              child: Image.asset(image, fit: BoxFit.contain),
+            Container(
+              margin: const EdgeInsets.only(right: 12.0),
+              child: SizedBox(
+                width: 130,
+                height: 114,
+                child: Image.asset(image, fit: BoxFit.contain),
+              ),
             ),
           ],
         ),

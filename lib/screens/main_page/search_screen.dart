@@ -21,9 +21,7 @@ class SearchScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Container(
-            color: const Color(0xFFDFE4DA),
-          ),
+          Container(),
           ListView(
             children: <Widget>[
               Padding(

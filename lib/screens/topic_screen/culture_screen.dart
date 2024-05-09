@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './culture_screen.dart';
 
 class CultureScreen extends StatelessWidget {
   final List<Map<String, dynamic>> topics = [
@@ -12,8 +11,7 @@ class CultureScreen extends StatelessWidget {
     },
     {
       'title': 'Countries',
-      'imagePath': 'assets/images/countries.png', // Thêm đường dẫn đến hình ảnh
-
+      'imagePath': 'assets/images/countries.png',
       'rectColor': Colors.white
     },
   ];

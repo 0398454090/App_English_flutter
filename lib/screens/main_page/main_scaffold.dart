@@ -1,46 +1,24 @@
+import 'package:flutter/material.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:app_english/screens/main_page/folder_screen.dart';
 import 'package:app_english/screens/main_page/home_screen.dart';
 import 'package:app_english/screens/main_page/leaderboard_screen.dart';
 import 'package:app_english/screens/main_page/search_screen.dart';
 import 'package:app_english/screens/main_page/settings/screens/setting_screen.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({Key? key});
 
   @override
-  State<StatefulWidget> createState() => _MainPage();
+  State<StatefulWidget> createState() => _MainPageState();
 }
 
-class _MainPage extends State<MainPage> {
-  int index = 2;
+class _MainPageState extends State<MainPage> {
+  int _currentIndex = 2;
+
   @override
   Widget build(BuildContext context) {
-    final items = <Widget>[
-      const Icon(
-        Icons.search,
-        size: 30,
-      ),
-      const Icon(
-        Icons.folder,
-        size: 30,
-      ),
-      const Icon(
-        Icons.home,
-        size: 30,
-      ),
-      const Icon(
-        Icons.leaderboard,
-        size: 30,
-      ),
-      const Icon(
-        Icons.settings,
-        size: 30,
-      )
-    ];
-
-    final screens = [
+    final List<Widget> _screens = [
       const SearchScreen(),
       const FolderScreen(),
       const HomeScreen(),
@@ -48,33 +26,55 @@ class _MainPage extends State<MainPage> {
       const SettingScreen(),
     ];
 
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-        top: false,
-        child: ClipRect(
-          child: Scaffold(
-              extendBody: true,
-              backgroundColor: Colors.cyan,
-              body: screens[index],
-              bottomNavigationBar: Theme(
-                data: Theme.of(context).copyWith(
-                  iconTheme: const IconThemeData(color: Colors.white),
-                ),
-                child: CurvedNavigationBar(
-                  color: Colors.black,
-                  buttonBackgroundColor: Colors.black,
-                  animationCurve: Curves.easeInOut,
-                  animationDuration: const Duration(milliseconds: 300),
-                  backgroundColor: Colors.transparent,
-                  height: 50,
-                  index: index,
-                  items: items,
-                  onTap: (index) => setState(() {
-                    this.index = index;
-                  }),
-                ),
-              )),
+    return Scaffold(
+      backgroundColor: Color(0xFFDAE4CD), // Đặt màu nền cho Scaffold
+      body: _screens[_currentIndex],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2), // Màu shadow
+              spreadRadius: 2,
+              blurRadius: 4,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SalomonBottomBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            SalomonBottomBarItem(
+              icon: const Icon(Icons.search),
+              title: Text('Search'),
+              selectedColor: Colors.blue[400],
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.folder),
+              title: Text('Folder'),
+              selectedColor: Colors.blue[400],
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
+              selectedColor: Colors.blue[400],
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.leaderboard),
+              title: Text('Leaderboard'),
+              selectedColor: Colors.blue[400],
+            ),
+            SalomonBottomBarItem(
+              icon: Icon(Icons.settings),
+              title: Text('Settings'),
+              selectedColor: Colors.blue[400],
+            ),
+          ],
         ),
       ),
     );
