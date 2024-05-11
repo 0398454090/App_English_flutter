@@ -20,6 +20,8 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
+        title: Text("Home"),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -111,21 +113,6 @@ class HomeScreen extends StatelessWidget {
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 200,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          promoCard('assets/images/one.jpg'),
-                          promoCard('assets/images/two.jpg'),
-                          promoCard('assets/images/three.jpg'),
-                          promoCard('assets/images/four.jpg'),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
                       height: 20,
                     ),
                     Container(
@@ -133,8 +120,9 @@ class HomeScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/three.jpg')),
+                            fit: BoxFit.contain,
+                            image:
+                                AssetImage('assets/images/flashcard_logo.png')),
                       ),
                       child: Container(
                         decoration: BoxDecoration(
@@ -146,8 +134,8 @@ class HomeScreen extends StatelessWidget {
                                 0.9
                               ],
                               colors: [
-                                Colors.black.withOpacity(.8),
-                                Colors.black.withOpacity(.2)
+                                Colors.black.withOpacity(.4),
+                                Colors.black.withOpacity(.1)
                               ]),
                         ),
                         child: const Align(
@@ -155,46 +143,94 @@ class HomeScreen extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.all(15.0),
                             child: Text(
-                              'Best Design',
+                              'Flash card',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/quiz_logo.png')),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              stops: const [
+                                0.3,
+                                0.9
+                              ],
+                              colors: [
+                                Colors.black.withOpacity(.4),
+                                Colors.black.withOpacity(.1)
+                              ]),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              'Quiz game',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: const DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage('assets/images/type_logo.png')),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              stops: const [
+                                0.3,
+                                0.9
+                              ],
+                              colors: [
+                                Colors.black.withOpacity(.4),
+                                Colors.black.withOpacity(.1)
+                              ]),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              'Type',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 22),
                   ],
                 ),
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget promoCard(image) {
-    return AspectRatio(
-      aspectRatio: 2.62 / 3,
-      child: Container(
-        margin: EdgeInsets.only(right: 15.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          image: DecorationImage(fit: BoxFit.cover, image: AssetImage(image)),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                  begin: Alignment.bottomRight,
-                  stops: const [
-                    0.1,
-                    0.9
-                  ],
-                  colors: [
-                    Colors.black.withOpacity(.8),
-                    Colors.black.withOpacity(.1)
-                  ])),
         ),
       ),
     );

@@ -207,20 +207,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ],
                       ),
+
                       const SizedBox(
-                        height: 25.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Brand(Brands.facebook),
-                          Brand(Brands.twitter),
-                          Brand(Brands.google),
-                          Brand(Brands.apple_logo),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
+                        height: 120.0,
                       ),
                       // don't have an account
                       Row(

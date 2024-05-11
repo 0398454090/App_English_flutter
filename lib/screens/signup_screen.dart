@@ -205,55 +205,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 30.0,
+                        height: 100.0,
                       ),
                       // sign up divider
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: 10,
-                            ),
-                            child: Text(
-                              'Sign up with',
-                              style: TextStyle(
-                                color: Colors.black45,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
-                      // sign up social media logo
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Brand(Brands.facebook),
-                          Brand(Brands.twitter),
-                          Brand(Brands.google),
-                          Brand(Brands.apple_logo),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      // already have an account
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -1,3 +1,6 @@
+import 'package:app_english/screens/topic_screen/Quiz_screen/quiz_screen.dart';
+import 'package:app_english/screens/topic_screen/flashcard_screen/flashcard_screen.dart';
+import 'package:app_english/screens/topic_screen/type_screen/type_screen.dart';
 import 'package:flutter/material.dart';
 
 class WeatherScreen extends StatelessWidget {
@@ -113,7 +116,30 @@ class WeatherScreen extends StatelessWidget {
                             ),
                           ],
                           onSelected: (value) {
-                            print('Selected option: $value');
+                            if (value == 'FlashCard') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FlashCardScreen(),
+                                ),
+                              );
+                            } else if (value == 'Quiz') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      QuizScreen(), // Thay QuizScreen bằng tên lớp của màn hình Quiz
+                                ),
+                              );
+                            } else if (value == 'Type') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      TypeScreen(), // Thay TypeScreen bằng tên lớp của màn hình Type
+                                ),
+                              );
+                            }
                           },
                         ),
                       ],
