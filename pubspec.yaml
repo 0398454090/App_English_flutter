@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: ">=3.3.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -41,6 +41,10 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   curved_navigation_bar: ^1.0.3
   ionicons: ^0.2.2
+  salomon_bottom_bar: ^3.3.2
+  http: ^1.2.1
+  shared_preferences: ^2.2.3
+  flutter_dotenv: ^5.1.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -93,6 +97,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/.env
     - assets/lottie/english.json
     - assets/lottie/asteroid.json
     - assets/images/google.png

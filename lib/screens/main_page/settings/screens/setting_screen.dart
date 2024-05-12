@@ -1,6 +1,8 @@
+import 'package:app_english/screens/auth_screen/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widget/forward_button.dart';
 import '../widget/setting_item.dart';
@@ -14,6 +16,46 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  Future<void> _signOut() async {
+    // Show confirmation dialog
+    final bool confirmSignOut = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Sign Out'),
+          content: const Text('Are you sure you want to sign out?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, true); // Return true when confirmed
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false); // Return false when canceled
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+
+    // If confirmed, clear token
+    if (confirmSignOut == true) {
+      // Clear token in shared preferences
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('id');
+
+      // Navigate to welcome screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,7 +173,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     icon: Ionicons.nuclear,
                     bgColor: Colors.red.shade100,
                     iconColor: Colors.red,
-                    onTap: () {},
+                    onTap: _signOut,
                   ),
                 ],
               ),

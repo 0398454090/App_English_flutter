@@ -1,5 +1,5 @@
-import 'package:app_english/screens/signin_screen.dart';
-import 'package:app_english/screens/signup_screen.dart';
+import 'package:app_english/screens/auth_screen/signin_screen.dart';
+import 'package:app_english/screens/auth_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.25,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -75,21 +75,6 @@ class WelcomeScreen extends StatelessWidget {
                       elevation: 0,
                       backgroundColor: Colors.blueAccent,),
                     child: const Text('Sign up',  style: TextStyle(fontSize: 16, color: Colors.white),),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // Action for Login with Google button
-                    },
-
-                    style: ElevatedButton.styleFrom(minimumSize: const Size(335,20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30), // Change border radius of the button
-                      ),
-                      elevation: 0,
-                      side: const BorderSide(color: Colors.black),
-                      backgroundColor: Colors.white,),
-                    icon: Image.asset('assets/images/google.png', height: 22, width: 22), // Replace with actual Google icon asset
-                    label: const Text('Continue with Google', style: TextStyle(fontSize: 16, color: Colors.black),),
                   ),
                 ],
               ),

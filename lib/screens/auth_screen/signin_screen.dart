@@ -1,10 +1,14 @@
-import 'package:app_english/screens/signup_screen.dart';
+import 'package:app_english/screens/auth_screen/signup_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 // ignore: unused_import
+import 'package:http/http.dart' as http;
 import 'package:icons_plus/icons_plus.dart';
 import 'package:app_english/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../theme/theme.dart';
+import '../../theme/theme.dart';
+import '../main_page/main_scaffold.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -15,7 +19,39 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formSignInKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final URI = dotenv.env['PORT'];
   bool rememberPassword = true;
+
+  Future<void> signIn() async {
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    final url = '$URI/auth/signin';
+    final response = await http.post(Uri.parse(url), body: {
+      'email': email,
+      'password': password,
+    });
+
+    if (response.statusCode == 200) {
+      final id = response.body; // Assuming the response is a token
+      // Store token in shared preferences
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('id', id);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to sign in: ${response.body}'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -62,6 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           }
                           return null;
                         },
+                        controller: emailController,
                         decoration: InputDecoration(
                           label: const Text('Email'),
                           hintText: 'Enter Email',
@@ -94,6 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           }
                           return null;
                         },
+                        controller: passwordController,
                         decoration: InputDecoration(
                           label: const Text('Password'),
                           hintText: 'Enter Password',
@@ -156,73 +194,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (_formSignInKey.currentState!.validate() &&
-                                rememberPassword) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Processing Data'),
-                                ),
-                              );
-                            } else if (!rememberPassword) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'Please agree to the processing of personal data')),
-                              );
-                            }
-                          },
+                          onPressed: signIn,
                           child: const Text('Sign in'),
                         ),
                       ),
                       const SizedBox(
                         height: 25.0,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: 10,
-                            ),
-                            child: Text(
-                              'Sign up with',
-                              style: TextStyle(
-                                color: Colors.black45,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Brand(Brands.facebook),
-                          Brand(Brands.twitter),
-                          Brand(Brands.google),
-                          Brand(Brands.apple_logo),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      // don't have an account
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -242,7 +220,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               );
                             },
                             child: Text(
-                              'Sign in',
+                              'Sign up',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: lightColorScheme.primary,

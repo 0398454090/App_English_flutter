@@ -1,5 +1,6 @@
 import 'package:app_english/screens/main_page/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -15,175 +16,223 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      backgroundColor: Color.fromRGBO(244, 243, 243, 1),
       appBar: AppBar(
-        title: const Text("HOME", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.white,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        title: Text("Home"),
         centerTitle: true,
-        backgroundColor: const Color(0xFF020E22),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              _handleSearch(context);
-            },
-          ),
-        ],
       ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            color: const Color(0xFF020E22),
-          ),
-          ListView(
-            children: [
-              _buildFlashCard(color: const Color.fromARGB(255, 111, 0, 109)),
-              _buildQuiz(color: const Color.fromARGB(255, 138, 4, 4)),
-              _buildType(color: const Color.fromARGB(255, 3, 108, 6)),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(30))),
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Text(
+                      'Hello',
+                      style: TextStyle(color: Colors.black87, fontSize: 25),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "Let's ",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          TextSpan(
+                            text: 'learn ',
+                            style: TextStyle(color: Colors.yellow),
+                          ),
+                          TextSpan(
+                            text: 'English ',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          TextSpan(
+                            text: 'together',
+                            style:
+                                TextStyle(color: Colors.blue), // Màu xanh dương
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Image.asset(
+                      'assets/images/search_here.png',
+                      width: double.infinity,
+                      height: 80,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(244, 243, 243, 1),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const TextField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.black87,
+                            ),
+                            hintText: "Search you're looking for",
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 15)),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Text(
+                      'Today lesson',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: const DecorationImage(
+                            fit: BoxFit.contain,
+                            image:
+                                AssetImage('assets/images/flashcard_logo.png')),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              stops: const [
+                                0.3,
+                                0.9
+                              ],
+                              colors: [
+                                Colors.black.withOpacity(.4),
+                                Colors.black.withOpacity(.1)
+                              ]),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              'Flash card',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/quiz_logo.png')),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              stops: const [
+                                0.3,
+                                0.9
+                              ],
+                              colors: [
+                                Colors.black.withOpacity(.4),
+                                Colors.black.withOpacity(.1)
+                              ]),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              'Quiz game',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: const DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage('assets/images/type_logo.png')),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              stops: const [
+                                0.3,
+                                0.9
+                              ],
+                              colors: [
+                                Colors.black.withOpacity(.4),
+                                Colors.black.withOpacity(.1)
+                              ]),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              'Type',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 22),
+                  ],
+                ),
+              )
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFlashCard({required Color color}) {
-    return ListTile(
-      contentPadding: const EdgeInsets.all(30),
-      title: Container(
-        height: 160,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'FlashCard',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 160,
-              height: 160,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/flashcard_logo.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
-      onTap: () {
-        // Xử lý khi người dùng nhấn vào FlashCard
-      },
-    );
-  }
-
-  Widget _buildQuiz({required Color color}) {
-    return ListTile(
-      contentPadding: const EdgeInsets.all(30),
-      title: Container(
-        height: 160,
-        width: 140,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: 180,
-              height: 180,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/quiz_logo.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            const Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    'Quiz',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      onTap: () {
-        // Xử lý khi người dùng nhấn vào Quiz
-      },
-    );
-  }
-
-  Widget _buildType({required Color color}) {
-    return ListTile(
-      contentPadding: const EdgeInsets.all(30),
-      title: Container(
-        height: 160,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Type',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: 140,
-              height: 100,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/type_logo.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      onTap: () {
-        // Xử lý khi người dùng nhấn vào Type
-      },
     );
   }
 }
