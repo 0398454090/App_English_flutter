@@ -1,5 +1,10 @@
+import 'dart:convert'; // Add this import statement
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widget/edit_item.dart';
 
@@ -12,6 +17,74 @@ class EditAccountScreen extends StatefulWidget {
 
 class _EditAccountScreenState extends State<EditAccountScreen> {
   String gender = "man";
+  String fullName = "";
+  int age = 0;
+  final URI = dotenv.env['PORT'];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userId = prefs.getString('id');
+    final url = '$URI/user/get/$userId';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final userData = json.decode(response.body)['user'];
+      setState(() {
+        fullName = userData['fullName'];
+        gender = userData['gender'];
+        age = int.parse(userData['age']);
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to fetch user data'),
+        ),
+      );
+    }
+  }
+
+  Future<void> updateUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userId = prefs.getString('id');
+    final url = '$URI/user/update/$userId';
+    final response = await http.put(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'name': fullName,
+        'age': age.toString(),
+        'gender': gender,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('User data updated successfully'),
+        ),
+      );
+
+      // Refetch user data to update the UI
+      await fetchUserData();
+    } else {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to update user data'),
+        ),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +101,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
-              onPressed: () {},
+              onPressed: updateUser,
               style: IconButton.styleFrom(
                 backgroundColor: Colors.lightBlueAccent,
                 shape: RoundedRectangleBorder(
@@ -57,27 +130,10 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               ),
               const SizedBox(height: 40),
               EditItem(
-                title: "Photo",
-                widget: Column(
-                  children: [
-                    Image.asset(
-                      "assets/images/appicon.png",
-                      height: 100,
-                      width: 100,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.lightBlueAccent,
-                      ),
-                      child: const Text("Upload Image"),
-                    )
-                  ],
-                ),
-              ),
-              const EditItem(
                 title: "Name",
-                widget: TextField(),
+                widget: TextField(
+                  controller: TextEditingController(text: fullName),
+                ),
               ),
               const SizedBox(height: 40),
               EditItem(
@@ -87,18 +143,18 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          gender = "man";
+                          gender = "male";
                         });
                       },
                       style: IconButton.styleFrom(
-                        backgroundColor: gender == "man"
+                        backgroundColor: gender == "male"
                             ? Colors.deepPurple
                             : Colors.grey.shade200,
                         fixedSize: const Size(50, 50),
                       ),
                       icon: Icon(
                         Ionicons.male,
-                        color: gender == "man" ? Colors.white : Colors.black,
+                        color: gender == "male" ? Colors.white : Colors.black,
                         size: 18,
                       ),
                     ),
@@ -106,18 +162,18 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          gender = "woman";
+                          gender = "female";
                         });
                       },
                       style: IconButton.styleFrom(
-                        backgroundColor: gender == "woman"
+                        backgroundColor: gender == "female"
                             ? Colors.deepPurple
                             : Colors.grey.shade200,
                         fixedSize: const Size(50, 50),
                       ),
                       icon: Icon(
                         Ionicons.female,
-                        color: gender == "woman" ? Colors.white : Colors.black,
+                        color: gender == "female" ? Colors.white : Colors.black,
                         size: 18,
                       ),
                     )
@@ -125,14 +181,17 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-              const EditItem(
-                widget: TextField(),
+              EditItem(
+                widget: TextField(
+                  onChanged: (value){
+                    setState(() {
+                      age = int.tryParse(value) ?? 0;
+                    });
+                  },
+                  controller: TextEditingController(text: age.toString())..selection = TextSelection.fromPosition(TextPosition(offset: age.toString().length)),
+                  keyboardType: TextInputType.number,
+                ),
                 title: "Age",
-              ),
-              const SizedBox(height: 40),
-              const EditItem(
-                widget: TextField(),
-                title: "Email",
               ),
             ],
           ),

@@ -93,8 +93,7 @@ class FolderScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFolder(
-    BuildContext context, {
+  Widget _buildFolder(BuildContext context, {
     required String title,
     required String image,
     required Color color,
