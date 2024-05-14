@@ -1,14 +1,17 @@
+import 'package:app_english/connection/connection_controller.dart';
 import 'package:app_english/screens/main_page/home_screen.dart';
 import 'package:app_english/screens/main_page/main_scaffold.dart';
 import 'package:app_english/screens/auth_screen/welcome_screen.dart';
 import 'package:app_english/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());
+  Get.put(InternetController(), permanent: true);
 }
 
 class MyApp extends StatelessWidget {
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
             ),
           );
         } else if (snapshot.hasError) {
-          return MaterialApp(
+          return GetMaterialApp(
             home: Scaffold(
               body: Center(
                 child: Text('Error: ${snapshot.error}'),
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
           );
         } else {
           final isLoggedIn = snapshot.data ?? false;
-          return MaterialApp(
+          return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'App English',
             theme: lightMode,
