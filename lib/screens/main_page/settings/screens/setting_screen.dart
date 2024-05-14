@@ -1,4 +1,5 @@
 import 'package:app_english/screens/auth_screen/welcome_screen.dart';
+import 'package:app_english/screens/main_page/settings/screens/folder/user_folder_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -150,20 +151,37 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   SettingItem(
                     textColor: Colors.black,
-                    title: "Language",
-                    icon: Ionicons.earth,
+                    title: "Folder",
+                    icon: Ionicons.folder,
                     bgColor: Colors.orange.shade100,
                     iconColor: Colors.orange,
-                    value: "English",
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const UserFolderScreen(),
+                        ),
+                      );
+                    },
                   ),
                   const Divider(height: 0,),
                   SettingItem(
                     textColor: Colors.black,
-                    title: "Notifications",
-                    icon: Ionicons.notifications,
+                    title: "Marked Word",
+                    icon: Ionicons.checkmark_outline,
                     bgColor: Colors.blue.shade100,
                     iconColor: Colors.blue,
+                    onTap: () {
+
+                    },
+                  ),
+                  const Divider(height: 0,),
+                  SettingItem(
+                    textColor: Colors.black,
+                    title: "Trained Word",
+                    icon: Ionicons.layers_outline,
+                    bgColor: Colors.green.shade100,
+                    iconColor: Colors.green,
                     onTap: () {},
                   ),
                   const Divider(height: 0,),
