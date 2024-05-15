@@ -38,7 +38,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       setState(() {
         fullName = userData['fullName'];
         gender = userData['gender'];
-        age = int.parse(userData['age']);
+        age = userData['age'];
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -60,7 +60,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       },
       body: jsonEncode(<String, dynamic>{
         'name': fullName,
-        'age': age.toString(),
+        'age': age,
         'gender': gender,
       }),
     );
