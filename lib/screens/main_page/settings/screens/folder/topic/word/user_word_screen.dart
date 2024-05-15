@@ -1,3 +1,4 @@
+import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -5,6 +6,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class WordPage extends StatefulWidget {
   final String topicId;
@@ -246,6 +250,35 @@ class _WordPageState extends State<WordPage> {
     }
   }
 
+  Future<void> _exportWordsToCSV() async {
+    List<List<dynamic>> rows = [];
+    rows.add(["Word", "Vocab", "Meaning"]);
+
+    for (var word in words) {
+      List<dynamic> row = [];
+      row.add(word['word']);
+      row.add(word['vocab']);
+      row.add(word['meaning']);
+      rows.add(row);
+    }
+
+    String csv = const ListToCsvConverter().convert(rows);
+
+    final directory = Directory('/sdcard/Download/');
+    if (!directory.existsSync()) {
+      directory.createSync();
+    }
+    final pathOfTheFileToWrite = path.join(directory!.path, "words.csv");
+    final file = File(pathOfTheFileToWrite);
+
+    await file.writeAsString(csv);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("CSV file saved to ${file.path}")),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -275,7 +308,7 @@ class _WordPageState extends State<WordPage> {
                   label: 'Update',
                 ),
                 SlidableAction(
-                  onPressed: (context) => _showDeleteConfirmDialog(word['id']),
+                  onPressed: (context) => _showDeleteConfirmDialog(word['_id']),
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
@@ -292,7 +325,6 @@ class _WordPageState extends State<WordPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Show options for adding a word
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
@@ -322,6 +354,14 @@ class _WordPageState extends State<WordPage> {
                       Navigator.pop(context);
                     },
                   ),
+                  ListTile(
+                    leading: Icon(Icons.download),
+                    title: Text('Export to CSV'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      await _exportWordsToCSV();
+                    },
+                  ),
                 ],
               );
             },
@@ -331,6 +371,7 @@ class _WordPageState extends State<WordPage> {
       ),
     );
   }
+
 
   void _showDeleteConfirmDialog(String id) {
     showDialog(
