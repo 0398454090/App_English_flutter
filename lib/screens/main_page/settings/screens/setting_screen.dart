@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app_english/screens/auth_screen/welcome_screen.dart';
 import 'package:app_english/screens/main_page/settings/screens/folder/user_folder_screen.dart';
+import 'package:app_english/screens/main_page/settings/screens/trained%20words/trained_word_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +13,7 @@ import 'package:http/http.dart' as http;
 import '../widget/forward_button.dart';
 import '../widget/setting_item.dart';
 import 'account_screen.dart';
+import 'marked words/marked_word_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -22,7 +24,7 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   String fullName = '';
-
+  String userId = '';
   @override
   void initState() {
     super.initState();
@@ -31,7 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Future<void> fetchUserData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userId = prefs.getString('id');
+    userId = prefs.getString('id')!;
     final String? URI = dotenv.env['PORT'];
     if (URI == null) {
       throw Exception('API URI not found in environment variables.');
@@ -208,7 +210,14 @@ class _SettingScreenState extends State<SettingScreen> {
                       icon: Ionicons.checkmark_outline,
                       bgColor: Colors.blue.shade100,
                       iconColor: Colors.blue,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MarkedWordScreen(userId: userId),
+                          ),
+                        );
+                      },
                     ),
                     const Divider(height: 0),
                     SettingItem(
@@ -217,7 +226,14 @@ class _SettingScreenState extends State<SettingScreen> {
                       icon: Ionicons.layers_outline,
                       bgColor: Colors.green.shade100,
                       iconColor: Colors.green,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TrainedWordScreen(userId: userId),
+                          ),
+                        );
+                      },
                     ),
                     const Divider(height: 0),
                     SettingItem(
