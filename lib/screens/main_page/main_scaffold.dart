@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:app_english/screens/main_page/folder_screen.dart';
+import 'package:app_english/screens/main_page/folder/folder_screen.dart';
 import 'package:app_english/screens/main_page/home_screen.dart';
-import 'package:app_english/screens/main_page/leaderboard_screen.dart';
+import 'package:app_english/screens/main_page/leaderboard/leaderboard_screen.dart';
 import 'package:app_english/screens/main_page/search_screen.dart';
 import 'package:app_english/screens/main_page/settings/screens/setting_screen.dart';
 
