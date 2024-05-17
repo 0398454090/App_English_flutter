@@ -155,7 +155,7 @@ class _TopicScreenState extends State<TopicScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => QuizScreen(),
+                                  builder: (context) => QuizScreen(topicId: topic['id'],),
                                 ),
                               );
                             } else if (value == 'Type') {
