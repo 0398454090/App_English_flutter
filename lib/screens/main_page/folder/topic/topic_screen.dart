@@ -36,13 +36,15 @@ class _TopicScreenState extends State<TopicScreen> {
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       setState(() {
-        topics = data.map((item) => {
+        topics = data
+            .where((item) => item['public'] == true)
+            .map((item) => {
           'id': item['id'],
           'title': item['name'],
           'wordIdCount': item['wordId'] != null ? item['wordId'].length : 0,
-          'imagePath': 'assets/images/topic_icon.png', // You can update this path based on your assets
           'rectColor': Colors.white,
-        }).toList();
+        })
+            .toList();
         isLoading = false;
       });
     } else {
@@ -148,21 +150,21 @@ class _TopicScreenState extends State<TopicScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => FlashCardScreen(topicId: topic['id'],),
+                                  builder: (context) => FlashCardScreen(topicId: topic['id']),
                                 ),
                               );
                             } else if (value == 'Quiz') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => QuizScreen(topicId: topic['id'],),
+                                  builder: (context) => QuizScreen(topicId: topic['id']),
                                 ),
                               );
                             } else if (value == 'Type') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => TypeScreen(),
+                                  builder: (context) => TypeScreen(topicId: topic['id']),
                                 ),
                               );
                             }

@@ -125,6 +125,7 @@ class _QuizScreenState extends State<QuizScreen> {
         _selectedAnswer = null;
       });
     } else {
+      _timer?.cancel(); // Pause the timer when quiz is completed
       // Show dialog with correct answer and time completed
       showDialog(
         context: context,
@@ -155,6 +156,7 @@ class _QuizScreenState extends State<QuizScreen> {
       );
     }
   }
+
 
   void _completeQuizTest() async {
     final prefs = await SharedPreferences.getInstance();
