@@ -1,9 +1,11 @@
-import 'package:app_english/screens/topic_screen/Quiz_screen/quiz_screen.dart';
-import 'package:app_english/screens/topic_screen/flashcard_screen/flashcard_screen.dart';
-import 'package:app_english/screens/topic_screen/type_screen/type_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
+
+import '../../../topic_screen/Quiz_screen/quiz_screen.dart';
+import '../../../topic_screen/flashcard_screen/flashcard_screen.dart';
+import '../../../topic_screen/type_screen/type_screen.dart';
 
 class TopicScreen extends StatefulWidget {
   final String folderId;
@@ -25,13 +27,19 @@ class _TopicScreenState extends State<TopicScreen> {
   }
 
   Future<void> _fetchTopics() async {
-    final response = await http.get(Uri.parse('http://localhost:8080/topic/get/${widget.folderId}'));
+    final String? URI = dotenv.env['PORT'];
+    if (URI == null) {
+      throw Exception('API URI not found in environment variables.');
+    }
+    final response = await http.get(Uri.parse('$URI/topic/get/${widget.folderId}'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       setState(() {
         topics = data.map((item) => {
+          'id': item['id'],
           'title': item['name'],
+          'wordIdCount': item['wordId'] != null ? item['wordId'].length : 0,
           'imagePath': 'assets/images/topic_icon.png', // You can update this path based on your assets
           'rectColor': Colors.white,
         }).toList();
@@ -106,12 +114,6 @@ class _TopicScreenState extends State<TopicScreen> {
                     ),
                     child: Row(
                       children: [
-                        Image.asset(
-                          topic['imagePath'],
-                          width: 48,
-                          height: 48,
-                        ),
-                        const SizedBox(width: 16.0),
                         Text(
                           topic['title'],
                           style: const TextStyle(
@@ -130,21 +132,23 @@ class _TopicScreenState extends State<TopicScreen> {
                               value: 'FlashCard',
                               child: Text('FlashCard'),
                             ),
-                            const PopupMenuItem(
-                              value: 'Quiz',
-                              child: Text('Quiz'),
-                            ),
-                            const PopupMenuItem(
-                              value: 'Type',
-                              child: Text('Type'),
-                            ),
+                            if (topic['wordIdCount'] > 10) // Condition for wordIdCount less than 10
+                              const PopupMenuItem(
+                                value: 'Quiz',
+                                child: Text('Quiz'),
+                              ),
+                            if (topic['wordIdCount'] > 10) // Condition for wordIdCount less than 10
+                              const PopupMenuItem(
+                                value: 'Type',
+                                child: Text('Type'),
+                              ),
                           ],
                           onSelected: (value) {
                             if (value == 'FlashCard') {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => FlashCardScreen(),
+                                  builder: (context) => FlashCardScreen(topicId: topic['id'],),
                                 ),
                               );
                             } else if (value == 'Quiz') {
