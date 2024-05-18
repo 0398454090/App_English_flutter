@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
-  const ForgetPasswordScreen({super.key});
+  const ForgetPasswordScreen({Key? key}) : super(key: key);
 
   @override
   State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
@@ -15,7 +15,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           color: Colors.black38,
           onPressed: () => Navigator.pop(context, false),
         ),
@@ -37,21 +37,21 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         child: Image.asset(
                             "assets/images/reset-password-icon.png"),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
-                      const Text(
-                        "Esqueceu sua senha?",
+                      Text(
+                        "Forget your password?",
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 10,
                       ),
                       const Text(
-                        "Por favor, informe o E-mail associado a sua conta que enviaremos um link para o mesmo com as instruções para restauração de sua senha.",
+                        "Please enter your email associated with your account, and we will send you a link with instructions to reset your password",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -67,7 +67,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     children: <Widget>[
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: "E-mail",
                           labelStyle: TextStyle(
                             color: Colors.black38,
@@ -75,15 +75,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             fontSize: 20,
                           ),
                         ),
-                        style: const TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 20),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
                       Container(
                         height: 60,
                         alignment: Alignment.centerLeft,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -99,8 +99,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         ),
                         child: SizedBox.expand(
                           child: TextButton(
-                            child: const Text(
-                              "Enviar",
+                            child: Text(
+                              "Send",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
