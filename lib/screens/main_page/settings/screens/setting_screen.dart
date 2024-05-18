@@ -98,157 +98,172 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(30),
-              child: Text(
-                "Settings",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFD7E1EC), // Start color
+              Color(0xFFFCFDF6), // End color
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(30),
+                child: Text(
+                  "Settings",
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Account",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "Account",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Image.asset("assets/images/appicon.png", width: 70, height: 70),
-                    const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          fullName,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Image.asset("assets/images/appicon.png",
+                          width: 70, height: 70),
+                      const SizedBox(width: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            fullName,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Developer",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        )
-                      ],
-                    ),
-                    const Spacer(),
-                    ForwardButton(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EditAccountScreen(),
-                          ),
-                        );
-                      },
-                    )
-                  ],
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Developer",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      ForwardButton(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EditAccountScreen(),
+                            ),
+                          );
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 30),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Settings",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
+              const SizedBox(height: 30),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "Settings",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(12.0),
-                  border: Border.all(color: Colors.black38),
-                ),
-                child: Column(
-                  children: [
-                    SettingItem(
-                      textColor: Colors.black,
-                      title: "Folder",
-                      icon: Ionicons.folder,
-                      bgColor: Colors.orange.shade100,
-                      iconColor: Colors.orange,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const UserFolderScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    const Divider(height: 0),
-                    SettingItem(
-                      textColor: Colors.black,
-                      title: "Marked Word",
-                      icon: Ionicons.checkmark_outline,
-                      bgColor: Colors.blue.shade100,
-                      iconColor: Colors.blue,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MarkedWordScreen(userId: userId),
-                          ),
-                        );
-                      },
-                    ),
-                    const Divider(height: 0),
-                    SettingItem(
-                      textColor: Colors.black,
-                      title: "Trained Word",
-                      icon: Ionicons.layers_outline,
-                      bgColor: Colors.green.shade100,
-                      iconColor: Colors.green,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TrainedWordScreen(userId: userId),
-                          ),
-                        );
-                      },
-                    ),
-                    const Divider(height: 0),
-                    SettingItem(
-                      textColor: Colors.red,
-                      title: "Sign out",
-                      icon: Ionicons.nuclear,
-                      bgColor: Colors.red.shade100,
-                      iconColor: Colors.red,
-                      onTap: _signOut,
-                    ),
-                  ],
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.black38),
+                  ),
+                  child: Column(
+                    children: [
+                      SettingItem(
+                        textColor: Colors.black,
+                        title: "Folder",
+                        icon: Ionicons.folder,
+                        bgColor: Colors.orange.shade100,
+                        iconColor: Colors.orange,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserFolderScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const Divider(height: 0),
+                      SettingItem(
+                        textColor: Colors.black,
+                        title: "Marked Word",
+                        icon: Ionicons.checkmark_outline,
+                        bgColor: Colors.blue.shade100,
+                        iconColor: Colors.blue,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MarkedWordScreen(userId: userId),
+                            ),
+                          );
+                        },
+                      ),
+                      const Divider(height: 0),
+                      SettingItem(
+                        textColor: Colors.black,
+                        title: "Trained Word",
+                        icon: Ionicons.layers_outline,
+                        bgColor: Colors.green.shade100,
+                        iconColor: Colors.green,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TrainedWordScreen(userId: userId),
+                            ),
+                          );
+                        },
+                      ),
+                      const Divider(height: 0),
+                      SettingItem(
+                        textColor: Colors.red,
+                        title: "Sign out",
+                        icon: Ionicons.nuclear,
+                        bgColor: Colors.red.shade100,
+                        iconColor: Colors.red,
+                        onTap: _signOut,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

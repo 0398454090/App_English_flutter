@@ -136,7 +136,8 @@ class _QuizScreenState extends State<QuizScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Correct Answer: ${_questions[_currentQuestionIndex]['correctAnswer']}'),
+                Text(
+                    'Correct Answer: ${_questions[_currentQuestionIndex]['correctAnswer']}'),
                 SizedBox(height: 10),
                 Text('Time Completed: ${_elapsedTime.inSeconds} seconds'),
               ],
@@ -157,12 +158,12 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
-
   void _completeQuizTest() async {
     final prefs = await SharedPreferences.getInstance();
     final String? uri = dotenv.env['PORT'];
     final userId = prefs.getString('id');
-    final testId = _questions.first['testId']; // Assuming testId is the same for all questions
+    final testId = _questions
+        .first['testId']; // Assuming testId is the same for all questions
 
     if (uri == null || userId == null) {
       throw Exception('API URI or User ID not found in environment variables.');
@@ -173,7 +174,7 @@ class _QuizScreenState extends State<QuizScreen> {
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'testId': testId,
-        'timeTaken':  _elapsedTime.inSeconds,
+        'timeTaken': _elapsedTime.inSeconds,
       }),
     );
 
@@ -187,7 +188,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildTimer() {
     return Text(
       'Time: ${_elapsedTime.inMinutes.remainder(60).toString().padLeft(2, '0')}:'
-          '${(_elapsedTime.inSeconds.remainder(60)).toString().padLeft(2, '0')}',
+      '${(_elapsedTime.inSeconds.remainder(60)).toString().padLeft(2, '0')}',
       style: TextStyle(fontSize: 18),
     );
   }
@@ -237,10 +238,10 @@ class _QuizScreenState extends State<QuizScreen> {
                   onChanged: _isAnswering
                       ? null
                       : (value) {
-                    setState(() {
-                      _selectedAnswer = value;
-                    });
-                  },
+                          setState(() {
+                            _selectedAnswer = value;
+                          });
+                        },
                 ),
               );
             }).toList(),
@@ -255,9 +256,11 @@ class _QuizScreenState extends State<QuizScreen> {
               onPressed: _selectedAnswer == null || _isAnswering
                   ? null
                   : () {
-                _checkAnswer();
-              },
-              child: Text(_currentQuestionIndex < _questions.length - 1 ? 'Next' : 'Finish'),
+                      _checkAnswer();
+                    },
+              child: Text(_currentQuestionIndex < _questions.length - 1
+                  ? 'Next'
+                  : 'Finish'),
             ),
           ],
         ),

@@ -65,66 +65,67 @@ class _UserFolderScreenState extends State<UserFolderScreen> {
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-        itemCount: folders.length,
-        itemBuilder: (context, index) {
-          final folder = folders[index];
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              elevation: 3,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TopicPage(folderId: folder['id']),
+              itemCount: folders.length,
+              itemBuilder: (context, index) {
+                final folder = folders[index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  );
-                },
-                borderRadius: BorderRadius.circular(10.0),
-                child: ListTile(
-                  contentPadding: EdgeInsets.all(6),
-                  leading: Icon(
-                    Icons.folder,
-                    color: Colors.black38,
-                    size: 40,
-                  ),
-                  title: Text(
-                    folder['name'],
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                    elevation: 3,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                TopicPage(folderId: folder['id']),
+                          ),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(6),
+                        leading: Icon(
+                          Icons.folder,
+                          color: const Color.fromARGB(96, 28, 26, 26),
+                          size: 40,
+                        ),
+                        title: Text(
+                          folder['name'],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        trailing: PopupMenuButton<String>(
+                          onSelected: (choice) => _onSelectMenu(choice, folder),
+                          itemBuilder: (BuildContext context) {
+                            return (folder['topicId'] == null ||
+                                    folder['topicId'].isEmpty)
+                                ? ['Update', 'Delete'].map((String choice) {
+                                    return PopupMenuItem<String>(
+                                      value: choice,
+                                      child: Text(choice),
+                                    );
+                                  }).toList()
+                                : ['Update'].map((String choice) {
+                                    return PopupMenuItem<String>(
+                                      value: choice,
+                                      child: Text(choice),
+                                    );
+                                  }).toList();
+                          },
+                          icon: Icon(Icons.more_vert),
+                        ),
+                      ),
                     ),
                   ),
-                  trailing: PopupMenuButton<String>(
-                    onSelected: (choice) =>
-                        _onSelectMenu(choice, folder),
-                    itemBuilder: (BuildContext context) {
-                      return (folder['topicId'] == null || folder['topicId'].isEmpty)
-                          ? ['Update', 'Delete'].map((String choice) {
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                        );
-                      }).toList()
-                          : ['Update'].map((String choice) {
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                        );
-                      }).toList();
-                    },
-                    icon: Icon(Icons.more_vert),
-                  ),
-                ),
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showCreateFolderDialog();

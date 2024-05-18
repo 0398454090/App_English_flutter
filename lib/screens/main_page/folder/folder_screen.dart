@@ -55,49 +55,57 @@ class _FolderScreenState extends State<FolderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: const Text(
-          "Folder",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: const Text(
+            "Folder",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
           ),
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          elevation: 0,
         ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Container(
-        color: const Color.fromRGBO(236, 240, 232, 1),
-        child: isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : ListView.builder(
-          itemCount: folders.length,
-          itemBuilder: (context, index) {
-            final folder = folders[index];
-            return _buildFolder(
-              context,
-              title: folder['name'],
-              color: _generateRandomColor(),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TopicScreen(folderId: folder['id']),
-                  ),
-                );
-              },
-            );
-          },
-        ),
-      ),
-    );
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFFCFDF6), Color(0xFFD7E1EC)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: folders.length,
+                  itemBuilder: (context, index) {
+                    final folder = folders[index];
+                    return _buildFolder(
+                      context,
+                      title: folder['name'],
+                      gradientColors: [Color(0xFFFCFDF6), Color(0xFFFCFDF6)],
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                TopicScreen(folderId: folder['id']),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+        ));
   }
 
-  Widget _buildFolder(BuildContext context, {
+  Widget _buildFolder(
+    BuildContext context, {
     required String title,
-    required Color color,
+    required List<Color> gradientColors,
     required VoidCallback onPressed,
   }) {
     return GestureDetector(
@@ -105,17 +113,30 @@ class _FolderScreenState extends State<FolderScreen> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 16),
         decoration: BoxDecoration(
-          color: color,
+          gradient: LinearGradient(
+            colors: gradientColors,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
             title,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 18.0,
+              fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

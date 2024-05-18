@@ -59,59 +59,92 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Container(),
+          // Adding a gradient background
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFFFCFDF6), Color(0xFFD7E1EC)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
           ListView(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextField(
-                  controller: _searchController,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: const BorderSide(width: 2, color: Colors.black),
-                    ),
-                    hintText: "Search for English words... ",
-                    hintStyle: TextStyle(color: Colors.black.withOpacity(0.2)),
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: const Icon(
-                        Icons.clear,
-                        size: 20,
-                        color: Colors.black,
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white70.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(15.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _searchResults.clear();
-                        });
-                        _searchController.clear();
-                      },
-                    ),
-                    filled: true,
-                    fillColor: Colors.black.withOpacity(0.1),
+                    ],
                   ),
-                  onSubmitted: (value) {
-                    _searchWords(value);
-                  },
+                  child: TextField(
+                    controller: _searchController,
+                    style: const TextStyle(color: Color(0xFF020E22)),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Search for English words... ",
+                      hintStyle:
+                          TextStyle(color: Colors.black.withOpacity(0.5)),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        size: 30,
+                        color: Color(0xFF020E22),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: const Icon(
+                          Icons.clear,
+                          size: 20,
+                          color: Color(0xFF020E22),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _searchResults.clear();
+                          });
+                          _searchController.clear();
+                        },
+                      ),
+                      filled: true,
+                      fillColor: Colors.transparent,
+                    ),
+                    onSubmitted: (value) {
+                      _searchWords(value);
+                    },
+                  ),
                 ),
               ),
               if (_searchResults.isNotEmpty)
                 Column(
                   children: _searchResults.map((word) {
-                    return ListTile(
-                      title: Text(word.word),
-                      subtitle: Text(word.meaning),
+                    return Card(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 12.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 5,
+                      child: ListTile(
+                        title: Text(word.word,
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Text(word.meaning),
+                      ),
                     );
                   }).toList(),
                 ),
             ],
-          )
+          ),
         ],
       ),
     );

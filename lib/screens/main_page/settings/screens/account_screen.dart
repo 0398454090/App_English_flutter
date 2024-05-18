@@ -85,7 +85,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,12 +182,14 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               const SizedBox(height: 40),
               EditItem(
                 widget: TextField(
-                  onChanged: (value){
+                  onChanged: (value) {
                     setState(() {
                       age = int.tryParse(value) ?? 0;
                     });
                   },
-                  controller: TextEditingController(text: age.toString())..selection = TextSelection.fromPosition(TextPosition(offset: age.toString().length)),
+                  controller: TextEditingController(text: age.toString())
+                    ..selection = TextSelection.fromPosition(
+                        TextPosition(offset: age.toString().length)),
                   keyboardType: TextInputType.number,
                 ),
                 title: "Age",

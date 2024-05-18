@@ -1,5 +1,4 @@
 import 'package:flip_card/flip_card.dart';
-import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -11,9 +10,10 @@ import 'flashcard_view.dart';
 class FlashCardScreen extends StatefulWidget {
   final String? topicId;
 
-  const FlashCardScreen({Key? key, required this.topicId}) : super(key: key);
+  const FlashCardScreen({super.key, required this.topicId});
 
   @override
+  // ignore: library_private_types_in_public_api
   _FlashCardScreenState createState() => _FlashCardScreenState();
 }
 
@@ -21,7 +21,7 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
   List<Map<String, dynamic>> _flashcard = [];
   int currentIdx = 0;
   final GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
-  String? uid; // User ID
+  String? uid;
 
   @override
   void initState() {
@@ -37,23 +37,25 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
     });
   }
 
-
   Future<void> _fetchFlashcards() async {
     final String? URI = dotenv.env['PORT'];
     if (URI == null) {
       throw Exception('API URI not found in environment variables.');
     }
-    final response = await http.get(Uri.parse('$URI/word/search/${widget.topicId}'));
+    final response =
+        await http.get(Uri.parse('$URI/word/search/${widget.topicId}'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       setState(() {
-        _flashcard = data.map((item) => {
-          'id': item['id'],
-          'word': item['word'],
-          'vocab': item['vocab'],
-          'meaning': item['meaning'],
-        }).toList();
+        _flashcard = data
+            .map((item) => {
+                  'id': item['id'],
+                  'word': item['word'],
+                  'vocab': item['vocab'],
+                  'meaning': item['meaning'],
+                })
+            .toList();
       });
     } else {
       throw Exception('Failed to load flashcards');
@@ -86,54 +88,99 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quiz'),
+        title: const Text(
+          'Flashcards',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 250,
-              height: 250,
-              child: _flashcard.isNotEmpty
-                  ? FlipCard(
-                key: cardKey,
-                front: FlashCardView(
-                  text: _flashcard[currentIdx]['word']!,
+      extendBodyBehindAppBar: true,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFD7E1EC),
+              Color(0xFFFCFDF6),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 340,
+                height: 400,
+                child: _flashcard.isNotEmpty
+                    ? FlipCard(
+                        key: cardKey,
+                        front: FlashCardView(
+                          text: _flashcard[currentIdx]['word']!,
+                        ),
+                        back: FlashCardView(
+                          text: _flashcard[currentIdx]['meaning']!,
+                        ),
+                      )
+                    : CircularProgressIndicator(),
+              ),
+              SizedBox(height: 20),
+              Text(
+                '${currentIdx + 1}/${_flashcard.length}',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
-                back: FlashCardView(
-                  text: _flashcard[currentIdx]['meaning']!,
-                ),
-              )
-                  : CircularProgressIndicator(),
-            ),
-            SizedBox(height: 20),
-            Text(
-              '${currentIdx + 1}/${_flashcard.length}',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                OutlinedButton.icon(
-                  onPressed: showPreviousCard,
-                  icon: Icon(Icons.chevron_left),
-                  label: Text("Previous"),
-                ),
-                OutlinedButton.icon(
-                  onPressed: addToFavorite,
-                  icon: Icon(Icons.favorite),
-                  label: Text("Add to favorite"),
-                ),
-                OutlinedButton.icon(
-                  onPressed: showNextCard,
-                  icon: Icon(Icons.chevron_right),
-                  label: Text("Next"),
-                ),
-              ],
-            )
-          ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    onPressed: showPreviousCard,
+                    icon: Icon(Icons.chevron_left),
+                    label: Text("Previous"),
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.red,
+                      backgroundColor: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    onPressed: addToFavorite,
+                    icon: Icon(Icons.favorite),
+                    label: Text("Add to favorite"),
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    onPressed: showNextCard,
+                    icon: Icon(Icons.chevron_right),
+                    label: Text("Next"),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -154,4 +201,3 @@ class _FlashCardScreenState extends State<FlashCardScreen> {
     cardKey.currentState?.controller?.reset();
   }
 }
-

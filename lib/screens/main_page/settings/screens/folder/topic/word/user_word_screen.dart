@@ -9,6 +9,7 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
 
 class WordPage extends StatefulWidget {
   final String topicId;
@@ -268,7 +269,10 @@ class _WordPageState extends State<WordPage> {
     if (!directory.existsSync()) {
       directory.createSync();
     }
-    final pathOfTheFileToWrite = path.join(directory!.path, "words.csv");
+
+    var uuid = Uuid();
+    String fileName = uuid.v4() + ".csv";
+    final pathOfTheFileToWrite = path.join(directory!.path, fileName);
     final file = File(pathOfTheFileToWrite);
 
     await file.writeAsString(csv);

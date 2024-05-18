@@ -1,235 +1,188 @@
-import 'package:app_english/screens/main_page/search_screen.dart';
+import 'package:app_english/screens/main_page/settings/screens/folder/user_folder_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// Import UserFolderScreen
 
 class HomeScreen extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
-  const HomeScreen({Key? key});
+  const HomeScreen({Key? key}) : super(key: key);
 
-  void _handleSearch(BuildContext context) {
+  // Hàm xử lý chuyển hướng đến UserFolderScreen
+  void _handleFlashcards(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const SearchScreen()),
+      MaterialPageRoute(
+          builder: (context) =>
+              const UserFolderScreen()), // Chuyển hướng đến UserFolderScreen
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(244, 243, 243, 1),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        title: Text("Home"),
-        centerTitle: true,
+        backgroundColor: Color(0xFFD7E1EC), // Màu nền trong suốt
+        systemOverlayStyle: SystemUiOverlayStyle.dark, // Văn bản màu tối
+        title: const Text("Home"), // Tiêu đề của app bar
+        centerTitle: true, // Căn giữa tiêu đề
       ),
-      body: SafeArea(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFD7E1EC),
+              Color(0xFFFCFDF6),
+              Color(0xFFD7E1EC),
+            ],
+            begin: Alignment.topCenter, // Điểm bắt đầu của gradient
+            end: Alignment.bottomCenter, // Điểm kết thúc của gradient
+          ),
+        ),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(30))),
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
-                      'Hello',
-                      style: TextStyle(color: Colors.black87, fontSize: 25),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 5),
+                RichText(
+                  text: const TextSpan(
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: "Let's ", style: TextStyle(color: Colors.red)),
+                      TextSpan(
+                          text: 'learn ',
+                          style: TextStyle(color: Colors.purple)),
+                      TextSpan(
+                          text: 'English ',
+                          style: TextStyle(color: Colors.green)),
+                      TextSpan(
+                          text: 'together',
+                          style: TextStyle(color: Colors.blue)),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  // Sử dụng GestureDetector để xử lý sự kiện nhấn
+                  onTap: () {
+                    _handleFlashcards(context); // Gọi hàm để chuyển hướng
+                  },
+                  child: Image.asset(
+                    'assets/images/search_here.png',
+                    width: double.infinity,
+                    height: 80,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Today\'s Lesson',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: const DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/flashcard_logo.png'),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "Let's ",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          TextSpan(
-                            text: 'learn ',
-                            style: TextStyle(color: Colors.yellow),
-                          ),
-                          TextSpan(
-                            text: 'English ',
-                            style: TextStyle(color: Colors.green),
-                          ),
-                          TextSpan(
-                            text: 'together',
-                            style:
-                                TextStyle(color: Colors.blue), // Màu xanh dương
-                          ),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomRight,
+                        stops: const [0.3, 0.9],
+                        colors: [
+                          Colors.black.withOpacity(.4),
+                          Colors.black.withOpacity(.1),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Image.asset(
-                      'assets/images/search_here.png',
-                      width: double.infinity,
-                      height: 80,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(244, 243, 243, 1),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: const TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.black87,
-                            ),
-                            hintText: "Search you're looking for",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 15)),
+                    child: const Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          'Flashcards',
+                          style: TextStyle(color: Colors.white, fontSize: 24),
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
-                      'Today lesson',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                const SizedBox(height: 20),
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: const DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/quiz_logo.png'),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                            fit: BoxFit.contain,
-                            image:
-                                AssetImage('assets/images/flashcard_logo.png')),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomRight,
+                        stops: const [0.3, 0.9],
+                        colors: [
+                          Colors.black.withOpacity(.4),
+                          Colors.black.withOpacity(.1),
+                        ],
                       ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              stops: const [
-                                0.3,
-                                0.9
-                              ],
-                              colors: [
-                                Colors.black.withOpacity(.4),
-                                Colors.black.withOpacity(.1)
-                              ]),
-                        ),
-                        child: const Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              'Flash card',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ),
+                    ),
+                    child: const Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          'Quiz Game',
+                          style: TextStyle(color: Colors.white, fontSize: 24),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/quiz_logo.png')),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              stops: const [
-                                0.3,
-                                0.9
-                              ],
-                              colors: [
-                                Colors.black.withOpacity(.4),
-                                Colors.black.withOpacity(.1)
-                              ]),
-                        ),
-                        child: const Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              'Quiz game',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                            fit: BoxFit.contain,
-                            image: AssetImage('assets/images/type_logo.png')),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              stops: const [
-                                0.3,
-                                0.9
-                              ],
-                              colors: [
-                                Colors.black.withOpacity(.4),
-                                Colors.black.withOpacity(.1)
-                              ]),
-                        ),
-                        child: const Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              'Type',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 22),
-                  ],
+                  ),
                 ),
-              )
-            ],
+                const SizedBox(height: 20),
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: const DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/type_logo.png'),
+                    ),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomRight,
+                        stops: const [0.3, 0.9],
+                        colors: [
+                          Colors.black.withOpacity(.4),
+                          Colors.black.withOpacity(.1),
+                        ],
+                      ),
+                    ),
+                    child: const Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          'Typing Practice',
+                          style: TextStyle(color: Colors.white, fontSize: 24),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),

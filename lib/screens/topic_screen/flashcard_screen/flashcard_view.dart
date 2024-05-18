@@ -11,9 +11,11 @@ class FlashCardView extends StatelessWidget {
     return Card(
       elevation: 4,
       child: Center(
-        child: Text(text, textAlign: TextAlign.center,),
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
-
 }
