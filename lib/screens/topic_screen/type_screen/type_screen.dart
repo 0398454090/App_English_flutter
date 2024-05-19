@@ -154,7 +154,7 @@ class _TypeScreenState extends State<TypeScreen> {
         return AlertDialog(
           title: Text('Quiz Completed'),
           content: Text(
-            'You answered $_correctAnswers out of ${_questions.length} questions correctly in ${_elapsedTime.inMinutes}:${_elapsedTime.inSeconds % 60} minutes.',
+            'You answered ${_correctAnswers} out of ${_questions.length} questions correctly in ${_elapsedTime.inMinutes}:${_elapsedTime.inSeconds % 60} minutes.',
           ),
           actions: [
             TextButton(

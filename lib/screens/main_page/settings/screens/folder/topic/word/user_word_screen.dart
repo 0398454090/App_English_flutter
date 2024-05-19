@@ -245,7 +245,7 @@ class _WordPageState extends State<WordPage> {
 
     if (response.statusCode == 200) {
       print('Words added successfully from CSV');
-      _fetchWords(); // Refresh the word list
+      await _fetchWords(); // Refresh the word list
     } else {
       print('Failed to add words: ${response.reasonPhrase}');
     }
@@ -312,7 +312,7 @@ class _WordPageState extends State<WordPage> {
                   label: 'Update',
                 ),
                 SlidableAction(
-                  onPressed: (context) => _showDeleteConfirmDialog(word['_id']),
+                  onPressed: (context) => _showDeleteConfirmDialog(word['id']),
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
                   icon: Icons.delete,

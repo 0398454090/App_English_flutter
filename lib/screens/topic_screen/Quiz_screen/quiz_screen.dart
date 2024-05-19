@@ -21,6 +21,7 @@ class _QuizScreenState extends State<QuizScreen> {
   bool _isLoading = true;
   bool _isAnswering = false;
   String? _selectedAnswer;
+  int _correctAnswers = 0;
   String? _feedbackMessage;
   Color _feedbackColor = Colors.transparent;
   Timer? _timer;
@@ -97,6 +98,9 @@ class _QuizScreenState extends State<QuizScreen> {
 
     if (response.statusCode == 200) {
       final bool isCorrect = json.decode(response.body);
+      if(isCorrect){
+        _correctAnswers++;
+      }
       setState(() {
         _feedbackMessage = isCorrect ? 'Correct!' : 'Incorrect!';
         _feedbackColor = isCorrect ? Colors.green : Colors.red;
@@ -137,7 +141,7 @@ class _QuizScreenState extends State<QuizScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    'Correct Answer: ${_questions[_currentQuestionIndex]['correctAnswer']}'),
+                    'Correct Answer: ${_correctAnswers}/${_questions.length}'),
                 SizedBox(height: 10),
                 Text('Time Completed: ${_elapsedTime.inSeconds} seconds'),
               ],
